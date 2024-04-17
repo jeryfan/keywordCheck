@@ -1,0 +1,15 @@
+.ChatApp,
+.MessageContainer,
+.Navbar,
+.Message .Bubble,
+.QuickReplies,
+.ChatFooter {
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.MessageContainer {
+  background-image: url("wt.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  opacity: 0.8;
+}

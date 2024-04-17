@@ -3,6 +3,7 @@
 import Chat, { Bubble, useMessages } from '@chatui/core';
 import '@chatui/core/dist/index.css';
 import { Box } from "@chakra-ui/react"
+import './chat.css'
 
 const ChatBox = () => {
     const { messages, appendMsg, setTyping } = useMessages([]);
@@ -18,7 +19,7 @@ const ChatBox = () => {
             setTyping(true);
             const extensionId = chrome.runtime.id
             chrome.runtime.sendMessage(extensionId, { type: "list" }, (resp) => {
-                const keywords = resp?.data.map(item => item?.name)
+                const keywords = resp.map(item => item?.name)
                 const result = keywords.filter(item => val.includes(item))
                 appendMsg({
                     type: 'text',
@@ -36,14 +37,16 @@ const ChatBox = () => {
 
     return (
         <Box width="400px"
-            height="600px">
+            height="600px"
+        >
             <Chat
                 navbar={{ title: "许显" }}
                 messages={messages}
                 renderMessageContent={renderMessageContent}
                 onSend={handleSend}
+
             />
-        </Box>
+        </Box >
     );
 };
 

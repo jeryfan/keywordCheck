@@ -8,7 +8,7 @@ chrome.runtime.onInstalled.addListener(() => {
     db.version(1).stores({
         keywords: '++id, &name'
     });
-    db.open().catch(function(e) {
+    db.open().catch(function (e) {
         console.error("Open failed: " + e.stack);
     })
 
@@ -20,13 +20,17 @@ chrome.runtime.onMessage.addListener(
         if (request.type === "add") {
             db.keywords.put(request.data)
         } else if (request.type === "list") {
-            
-            db.keywords.toArray().then(keywords=>{
-                console.log("users",keywords);
+
+            db.keywords.toArray().then(keywords => {
+                console.log("users", keywords);
                 sendResponse(keywords)
             })
         } else if (request.type === "delete") {
             db.keywords.delete(request.data.id)
+        } else if (request.type === "bulkAdd") {
+            console.log("bulkadd", request.data);
+
+            db.keywords.bulkAdd(request.data)
         }
         return true
 
