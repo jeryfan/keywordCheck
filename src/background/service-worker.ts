@@ -1,8 +1,5 @@
 import Dexie from 'dexie'
-
-
-console.log("service-worker-starting");
-var db
+let db;
 chrome.runtime.onInstalled.addListener(() => {
     db = new Dexie("MyDatabase");
     db.version(1).stores({
@@ -16,20 +13,16 @@ chrome.runtime.onInstalled.addListener(() => {
 // ignore-ts
 chrome.runtime.onMessage.addListener(
     function (request, sender, sendResponse) {
-        console.log(request, sender);
         if (request.type === "add") {
             db.keywords.put(request.data)
         } else if (request.type === "list") {
 
             db.keywords.toArray().then(keywords => {
-                console.log("users", keywords);
                 sendResponse(keywords)
             })
         } else if (request.type === "delete") {
             db.keywords.delete(request.data.id)
         } else if (request.type === "bulkAdd") {
-            console.log("bulkadd", request.data);
-
             db.keywords.bulkAdd(request.data)
         }
         return true

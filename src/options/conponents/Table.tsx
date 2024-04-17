@@ -20,7 +20,6 @@ const KeysTable: React.FC = () => {
             await insert()
             message.success("创建成功")
         } catch (e) {
-            console.log(e);
             message.error("创建失败")
 
         }
@@ -74,7 +73,6 @@ const KeysTable: React.FC = () => {
     useEffect(() => {
         const extensionId = chrome.runtime.id
         chrome.runtime.sendMessage(extensionId, { type: "list" }, (keywords) => {
-            console.log("resp==>", keywords);
             setTimeout(() => {
                 setData(keywords)
             }, 1000)
@@ -84,8 +82,6 @@ const KeysTable: React.FC = () => {
 
     const customRequest = async (x) => {
         const { data } = await xlsxRead(x.file)
-        console.log(data);
-
         if (data) {
             await chrome.runtime.sendMessage({ type: "bulkAdd", data: data.map(item => ({ name: item["name"] })) })
             setTimeout(() => { setFresh(() => !fresh) }, 500)

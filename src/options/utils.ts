@@ -10,7 +10,6 @@ export const xlsxRead = async (file): Promise<{ data: Array<{ name: string }> | 
             const workbook = read(data, { type: 'binary' });
             const sheetName = workbook.SheetNames[0]; // 默认读取第一个工作表
             const jsonData = utils.sheet_to_json(workbook.Sheets[sheetName]);
-            console.log(jsonData);
             resolve({ data: jsonData, error: undefined })
         };
         reader.onerror = (error) => {
