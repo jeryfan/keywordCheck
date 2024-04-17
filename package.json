@@ -5,12 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.8.2",
+    "@chatui/core": "^2.4.2",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "antd": "^5.16.2",

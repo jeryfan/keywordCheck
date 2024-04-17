@@ -3,15 +3,16 @@
 
 import './App.css'
 import { ChakraProvider } from "@chakra-ui/react"
-// import Layout from '@/popup/conponents/layout'
-import ChatBox from './conponents/chatBox'
+import KeysTable from './conponents/Table'
+
+
 
 function App() {
 
     return (
         <>
             <ChakraProvider>
-                <ChatBox />
+                <KeysTable />
             </ChakraProvider>
 
         </>
