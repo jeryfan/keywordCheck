@@ -13,8 +13,14 @@ const KeysTable: React.FC = () => {
     };
 
     const handleOk = async () => {
-        await insert()
-        setIsModalOpen(false);
+        try{
+            await insert()
+            message.success("创建成功")
+        }catch(e){
+            console.log(e);
+            message.error("创建失败")
+        }
+        setTimeout(()=>{setIsModalOpen(false);setFresh(()=>!fresh)},1000)
     };
 
     const handleCancel = () => {
@@ -26,17 +32,15 @@ const KeysTable: React.FC = () => {
 
     const insert = async () => {
         if (keywordRef.current?.value.trim()) {
-            await chrome.runtime.sendMessage({ type: "add", data: keywordRef.current?.value.trim() })
-            setFresh(!fresh)
+            await chrome.runtime.sendMessage({ type: "add", data: {name:keywordRef.current?.value.trim()} })
         } else {
             message.error("未输入关键字")
         }
-
     }
 
     const deleteData = async (item) => {
         await chrome.runtime.sendMessage({ type: "delete", data: item })
-        setFresh(!fresh)
+        setFresh(()=>!fresh)
     }
 
     const columns = [
@@ -63,9 +67,11 @@ const KeysTable: React.FC = () => {
 
     useEffect(() => {
         const extensionId = chrome.runtime.id
-        chrome.runtime.sendMessage(extensionId, { type: "list" }, (resp) => {
-            console.log("resp==>", resp);
-            setData(resp.data)
+        chrome.runtime.sendMessage(extensionId, { type: "list" }, (keywords) => {
+            console.log("resp==>", keywords);
+            setTimeout(()=>{
+                setData(keywords)
+            },1000)
         })
 
     }, [fresh])
